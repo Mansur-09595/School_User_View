@@ -1,0 +1,24 @@
+{% extends '_base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+  {% for article in object_list %}
+    <div class="card">
+      <div class="card-header">
+        <span class="font-weight-bold">{{ article.id }}</span> &middot;
+        <span class="text-muted">by {{ article.username }} | {{ article.date_joined }}</span>
+      </div>
+      <div class="card-body">
+        <p>{{ article.username }}</p>
+        {% if user.is_superuser %}
+            <a href="{% url 'user_edit' article.pk %}">Edit</a> |
+            <a href="{% url 'user_delete' article.pk %}">Delete</a>
+        {% endif %}
+      </div>
+    </div>
+    <br />
+  {% endfor %}
+{% endblock content %}
